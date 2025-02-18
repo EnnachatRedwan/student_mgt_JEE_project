@@ -1,0 +1,131 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1F2937; /* Dark background */
+    color: #E5E7EB; /* Light text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h2 {
+    color: #2563EB; /* Bright blue for headers */
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: #10B981; /* Green for links */
+    font-weight: 500;
+    margin-right: 1.5rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+a:hover {
+    color: #059669;
+    transform: translateY(-2px);
+}
+
+table {
+    width: 100%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #374151; /* Darker border */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+th {
+    background-color: #2563EB; /* Blue background for headers */
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+tr:hover {
+    background-color: #4B5563; /* Darker hover effect */
+}
+
+form {
+    background-color: #374151; /* Dark form background */
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid #E5E7EB; /* Light border for contrast */
+}
+
+form label {
+    font-size: 1rem;
+    color: #E5E7EB; /* Light text for labels */
+}
+
+form input {
+    padding: 12px;
+    border: 1px solid #6B7280; /* Darker border */
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #1F2937; /* Dark input background */
+    color: #E5E7EB; /* Light text for inputs */
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #2563EB;
+    outline: none;
+    box-shadow: 0 0 0 1px #2563EB;
+}
+
+form input[type="submit"] {
+    background-color: #2563EB; /* Blue button */
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+
+form input[type="submit"]:hover {
+    background-color: #1D4ED8;
+    transform: translateY(-2px);
+}
+
+form input[type="submit"]:active {
+    background-color: #1E40AF;
+    transform: translateY(0);
+}
+
+form input[type="submit"]:disabled {
+    background-color: #4B5563; /* Disabled button */
+    cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    table {
+        font-size: 0.875rem;
+    }
+
+    form {
+        width: 100%;
+        max-width: 90%;
+    }
+}
