@@ -1,5 +1,6 @@
 package org.isga.project_jee.dao;
 
+import org.isga.project_jee.model.Score;
 import org.isga.project_jee.model.Subject;
 
 import java.sql.Connection;
@@ -10,8 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectDao {
-    public void addSubject(String name){
-        try(Connection conn = DatabaseConnection.getConnection()) {
+
+    private final ScoreDao scoreDao;
+
+    public SubjectDao() {
+        scoreDao = new ScoreDao();
+    }
+
+
+    public void addSubject(String name) {
+        try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO SUBJECT (name) VALUES (?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, name);
@@ -21,7 +30,7 @@ public class SubjectDao {
         }
     }
 
-    public List<Subject> getSubjects(){
+    public List<Subject> getSubjects() {
         List<Subject> subjects = new ArrayList<>();
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM SUBJECT";
@@ -37,7 +46,7 @@ public class SubjectDao {
         return subjects;
     }
 
-    public Subject getSubject(int id){
+    public Subject getSubject(int id) {
         Subject subject = null;
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM SUBJECT WHERE id = ?";
@@ -53,7 +62,7 @@ public class SubjectDao {
         return subject;
     }
 
-    public void updateSubject(Subject subject){
+    public void updateSubject(Subject subject) {
         try (Connection conn = DatabaseConnection.getConnection()) {
             String sql = "UPDATE SUBJECT SET name = ? WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -65,8 +74,12 @@ public class SubjectDao {
         }
     }
 
-    public void deleteSubject(int id){
+    public void deleteSubject(int id) {
         try (Connection conn = DatabaseConnection.getConnection()) {
+            List<Score> scores = scoreDao.getScoresBySubject(id);
+            for (Score score : scores) {
+                scoreDao.deleteScore(score.getId());
+            }
             String sql = "DELETE FROM SUBJECT WHERE id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);

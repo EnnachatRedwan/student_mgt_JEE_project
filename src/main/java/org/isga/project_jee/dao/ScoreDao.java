@@ -101,4 +101,23 @@ public class ScoreDao {
         }
         return count > 0 ? totalScore / count : 0.0;
     }
+
+    public List<Score> getScoresBySubject(int subjectId){
+        List<Score> scores = new ArrayList<>();
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM score WHERE subject_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, subjectId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int studentId = rs.getInt("student_id");
+                double scoreValue = rs.getDouble("score");
+                scores.add(new Score(id, studentId, subjectId, scoreValue));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return scores;
+    }
 }

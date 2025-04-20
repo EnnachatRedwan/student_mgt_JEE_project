@@ -30,7 +30,7 @@
             <td class="px-6 py-4">
                 <a href="subjects?action=edit&id=<%= subject.getId() %>">Edit</a> |
                 <a href="subjects?action=delete&id=<%= subject.getId() %>"
-                   onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                   onclick="return confirm('Deleting this subject will delete all related scores!')">Delete</a>
             </td>
         </tr>
         <%
