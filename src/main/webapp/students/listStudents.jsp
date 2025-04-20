@@ -37,6 +37,7 @@
                 <td class="px-6 py-4"><%= student.getTel() %>
                 </td>
                 <td class="px-6 py-4">
+                    <a href="scores?studentId=<%= student.getId() %>">Scores</a> |
                     <a href="students?action=edit&id=<%= student.getId() %>">Edit</a> |
                     <a href="students?action=delete&id=<%= student.getId() %>"
                        onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
