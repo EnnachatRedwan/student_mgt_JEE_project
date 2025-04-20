@@ -5,8 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.isga.project_jee.dao.StudentDao;
 import org.isga.project_jee.model.Student;
+import org.isga.project_jee.services.StudentService;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,33 +14,34 @@ import java.util.List;
 
 @WebServlet("/students")
 public class StudentsServlet extends HttpServlet {
-    private StudentDao studentDAO = new StudentDao();
+    private final StudentService studentService;
+
+    public StudentsServlet() {
+        this.studentService = new StudentService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
         if (action == null) {
-            // View students
-            List<Student> students = studentDAO.getStudents();
+            List<Student> students = studentService.getStudents();
             req.setAttribute("students", students);
-            req.getRequestDispatcher("listStudents.jsp").forward(req, resp);
+            req.getRequestDispatcher("/students/listStudents.jsp").forward(req, resp);
         } else if (action.equals("delete")) {
-            // Delete student
             int studentId = Integer.parseInt(req.getParameter("id"));
-            studentDAO.deleteStudent(studentId);
+            studentService.deleteStudent(studentId);
             resp.sendRedirect("students");
         } else if (action.equals("edit")) {
-            // Edit student
             int studentId = Integer.parseInt(req.getParameter("id"));
-            Student student = studentDAO.getStudentById(studentId);
+            Student student = studentService.getStudentById(studentId);
             req.setAttribute("student", student);
-            req.getRequestDispatcher("editStudent.jsp").forward(req, resp);
+            req.getRequestDispatcher("/students/editStudent.jsp").forward(req, resp);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String firstName = req.getParameter("first_name");
         String lastName = req.getParameter("last_name");
         String address = req.getParameter("address");
@@ -48,12 +49,12 @@ public class StudentsServlet extends HttpServlet {
 
         String idParam = req.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
-            // Add new student
-            studentDAO.addStudent(firstName, lastName, address, tel);
+            Student student = new Student(firstName, lastName, address, tel);
+            studentService.addStudent(student);
         } else {
-            // Update existing student
             int id = Integer.parseInt(idParam);
-            studentDAO.updateStudent(id, firstName, lastName, address, tel);
+            Student student = new Student(id, firstName, lastName, address, tel);
+            studentService.updateStudent(student);
         }
 
         resp.sendRedirect("students");

@@ -15,6 +15,13 @@ public class Student {
         this.tel = tel;
     }
 
+    public Student(String firstName, String lastName, String address, String tel) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.tel = tel;
+    }
+
     public int getId() { return id; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
